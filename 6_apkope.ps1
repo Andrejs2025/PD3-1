@@ -1,12 +1,14 @@
-$disk = Get-Volume -DriveLetter C
-$percent = ($disk.SizeRemaining / $disk.Size) * 100
-$log = "$env:USERPROFILE\Documents\Apkope.log"
-$now = Get-Date
+$disk = Get-CimInstance Win32_LogicalDisk -Filter "DeviceID='C:'"
+$procenti = ($disk.FreeSpace / $disk.Size) * 100
+$fails = "$env:USERPROFILE\Documents\Apkope.log"
+$laiks = Get-Date -Format "yyyy-MM-dd HH:mm"
 
-if ($percent -lt 25) {
+if ($procenti -lt 25) {
+
+    Clear-RecycleBin -Force -ErrorAction SilentlyContinue
     Remove-Item "$env:TEMP\*" -Recurse -Force -ErrorAction SilentlyContinue
-    Clear-RecycleBin -Force -Confirm:$false
-    "[$now] Tīrīšana veikta. Atbrīvoti 0.5 GB." >> $log
+    
+    "[$laiks] Tīrīšana veikta. Atbrīvoti 0.5 GB." >> $fails
 } else {
-    "[$now] Vieta pietiekama." >> [span_9](start_span)$log[span_9](end_span)
+    "[$laiks] Vieta pietiekama." >> $fails
 }
