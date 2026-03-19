@@ -1,0 +1,39 @@
+$disk = Get-CimInstance
+
+Win32_LogicalDisk -Filter
+
+"DevicelD='C:"
+
+$procenti = ($disk.FreeSpace /
+
+$disk.Size) * 100
+
+$fails = "$env:USERPROFILE\Do
+
+cuments\Apkope.log"
+
+$laiks = Get-Date -Format
+
+"yyyy-MM-dd HH:mm"
+
+if ($procenti -It 25) {
+
+Clear-RecycleBin -Force -Error Action SilentlyContinue Remove-Item "$env:TEMP\*"
+
+-Recurse -Force -ErrorAction SilentlyContinue
+
+"[$laiks] Tīrīšana veikta.
+
+Atbrīvoti 0.5 GB." >> $fails
+
+} else {
+
+"[$laiks] Vi
+
+tiekama."
+
+<<
+
+$fails
+
+}
